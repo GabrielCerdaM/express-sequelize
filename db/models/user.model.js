@@ -8,6 +8,11 @@ const UserSchema = {
     primaryKey: true,
     type: DataTypes.INTEGER
   },
+  role: {
+    type: DataTypes.ENUM('admin', 'user', 'guest'),
+    allowNull: false,
+    defaultValue: 'user'
+  },
   email: {
     allowNull: false,
     type: DataTypes.STRING,

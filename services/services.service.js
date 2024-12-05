@@ -38,7 +38,7 @@ class ServiceService {
     // }
     const index = this.services.findIndex(item => item.id == id);
     if (index === -1) {
-      throw boom.notFound('Servicio no encontrado')
+      // throw boom.notFound('Servicio no encontrado')
     }
   }
 
@@ -46,7 +46,7 @@ class ServiceService {
     let service;
     const index = this.services.findIndex(item => item.id == id);
     if (index === -1) {
-      throw boom.notFound('Servicio no encontrado')
+      // throw boom.notFound('Servicio no encontrado')
     }
     service = this.services[index];
     this.services[index] = {

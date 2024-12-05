@@ -31,13 +31,12 @@ class UserService {
 
       await models.User.create({ ...user, password });
       // this.services.push(service)
-
     }
   }
 
   async create(data) {
     try {
-      const { email, password } = data
+      const { email, role, password } = data
       const user = await models.User.findOne({ where: { email } })
       if (user) {
         throw new Error("El correo ya se encuentra registrado");
@@ -47,19 +46,20 @@ class UserService {
       const newUser = await models.User.create({ ...data, password: hashed })
       return { id: newUser.id, email: newUser.email, createdAt: newUser.createdAt }
     } catch (error) {
+      console.log({type: typeof error});
+      console.log(error.isBoom);
       throw new Error(error);
     }
   }
 
   async find() {
-    const rta = await models.User.findAll({ attributes: ['id','email', 'createdAt'] });
+    const rta = await models.User.findAll({ attributes: ['id', 'role', 'email', 'createdAt'] });
     return rta;
   }
 
   async findOne(id) {
-    const user = await models.User.findByPk(id, { attributes: ['email', 'createdAt'] })
+    const user = await models.User.findByPk(id, { attributes: ['role', 'email', 'createdAt'] })
     if (!user) {
-      // boom.notFound('Usuario no encontrado');
       throw new Error('Usuario no encontrado')
     }
     return user
@@ -69,55 +69,20 @@ class UserService {
   async update(id, changes) {
     try {
       await models.User.update({ ...changes }, { where: { id } })
-      return await models.User.findByPk(id, { attributes: ['id', 'email', 'createdAt'] })
+      return await models.User.findByPk(id, { attributes: ['id', 'role', 'email', 'createdAt'] })
     } catch (error) {
       throw error
     }
   }
 
   async delete(id) {
-    try {
-      const userDeleted = await models.User.destroy({ where: { id } })
-      console.log({ userDeleted });
+    const userDeleted = await models.User.destroy({ where: { id } })
+    console.log({ userDeleted });
 
-      if (!userDeleted) {
-        throw new Error('Error al eliminar usuario')
-        // boom.badRequest('Error al eliminar usuario')
-      }
-      return userDeleted
-    } catch (error) {
-      throw error
+    if (!userDeleted) {
+      throw new Error('Error al eliminar usuario')
     }
-  }
-
-  async login(email, password) {
-    try {
-      const user = await models.User.findOne({
-        where: {
-          [Op.and]: [{ email: email }]
-        }
-      })
-      if (!user) {
-        throw new Error("Credenciales inválidas");
-      }
-
-      const authenticated = await compare(password, user.password)
-
-      if (!authenticated) {
-        throw new Error("Credenciales inválidas");
-      }
-
-      const token = jwt.sign(
-        { email: user.email, createdAt: user.createdAt },
-        process.env.JWT_SECRET,
-        { expiresIn: '1h' }
-      )
-
-      return token;
-
-    } catch (error) {
-      throw error
-    }
+    return userDeleted
   }
 }
 

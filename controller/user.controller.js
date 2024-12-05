@@ -10,10 +10,8 @@ class userController {
 
   async create(req, res, next) {
     try {
-      const { email, password } = req.body
-      const user = { email, password }
-      console.log({user});
-
+      const { email, role, password } = req.body
+      const user = { email, role, password }
       const newUser = await this.service.create(user)
       res.status(200).json({ newUser })
     } catch (error) {
@@ -37,7 +35,7 @@ class userController {
       if (!user) {
         throw new Error('Usuario no encontrado')
       }
-      res.status(200).json({ user })
+      res.status(200).json(user)
     } catch (error) {
       next(error)
     }
@@ -84,19 +82,6 @@ class userController {
       next(error)
     }
   }
-
-  async login(req, res, next) {
-    try {
-      const { email, password } = req.body
-      const login = await this.service.login(email, password);
-      res.status(200).json({ login })
-    } catch (error) {
-      next(error)
-    }
-  }
-
-  async logout(req, res, next) { }
-  async resetPassword(req, res, next) { }
 }
 
 module.exports = userController
