@@ -1,5 +1,4 @@
 const express = require('express')
-const { faker } = require('@faker-js/faker')
 const { boomErrorHandle, errorHandle, logErrors } = require('./middlewares/handleError')
 
 const serviceRouter = require('./routes/servicio.routes')
@@ -16,7 +15,9 @@ app.use(express.json())
 app.use('/api/v1', router)
 
 router.use('/servicio', serviceRouter)
-router.use('/users', authenticateToken, userRouter)
+
+router.use('/users', userRouter)
+
 router.use('/auth', authRouter)
 
 app.use(logErrors)
