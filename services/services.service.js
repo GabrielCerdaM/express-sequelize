@@ -6,7 +6,7 @@ class ServiceService {
 
   constructor() {
     this.services = []
-    this.generate();
+    // this.generate();
   }
 
   async generate() {
@@ -33,12 +33,9 @@ class ServiceService {
   }
 
   async findOne(id) {
-    // if (!id) {
-    //   return false;
-    // }
     const index = this.services.findIndex(item => item.id == id);
     if (index === -1) {
-      // throw boom.notFound('Servicio no encontrado')
+      throw new Error("Servicio no encontrado");      
     }
   }
 
@@ -46,7 +43,7 @@ class ServiceService {
     let service;
     const index = this.services.findIndex(item => item.id == id);
     if (index === -1) {
-      // throw boom.notFound('Servicio no encontrado')
+      throw new Error("Servicio no encontrado");      
     }
     service = this.services[index];
     this.services[index] = {

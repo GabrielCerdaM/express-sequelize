@@ -25,7 +25,7 @@ class AuthService {
       }
 
       const token = jwt.sign(
-        { email: user.email, createdAt: user.createdAt },
+        { email: user.email, role:user.role , createdAt: user.createdAt },
         process.env.JWT_SECRET,
         { expiresIn: '1h' }
       )
