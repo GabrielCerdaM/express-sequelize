@@ -4,6 +4,7 @@ const router = express.Router();
 const servicesService = new ServiceService();
 const validatorHandle = require('../middlewares/validatorHandler')
 const { createServiceSchema, updateServiceSchema, getServiceSchema } = require('../schema/service.schema')
+const { config } = require('../config/config')
 
 // GET
 router.get('/generate', (req, res) => {
@@ -14,8 +15,6 @@ router.get('/generate', (req, res) => {
 
 // GET
 router.get('/', async (req, res) => {
-  const service = await servicesService.find();
-  return res.status(200).json(service)
 })
 
 // GET

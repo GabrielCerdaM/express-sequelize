@@ -8,6 +8,7 @@ const config = {
   dbHost: process.env.POSTGRES_HOST,
   dbName: process.env.POSTGRES_DB,
   dbPort: process.env.POSTGRES_PORT,
+  resendApiKey: process.env.RESEND_SECRET
 }
 
 module.exports = { config }

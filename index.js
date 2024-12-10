@@ -14,7 +14,7 @@ const router = express.Router();
 app.use(express.json())
 app.use('/api/v1', router)
 
-router.use('/servicio', serviceRouter)
+router.use('/servicios', serviceRouter)
 
 router.use('/users', userRouter)
 
