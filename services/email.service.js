@@ -1,6 +1,7 @@
 const { Resend } = require('resend');
 const { config } = require('../config/email.config');
 const nodemailer = require('nodemailer')
+const handlebars = require('handlebars')
 const fs = require('fs')
 // const html  = require('../utils/')
 class MailService {
@@ -9,7 +10,7 @@ class MailService {
     // this.resend = new Resend(config.resendApiKey)
 
   }
-  async send() {
+  async send(email, token) {
     // await this.resend.emails.send({
     //   from: 'Acme <onboarding@resend.dev>',
     //   to:['gabriel.cerda.m@gmail.com'],
@@ -19,7 +20,7 @@ class MailService {
     // Generate SMTP service account from ethereal.email
     try {
       const testAccount = await nodemailer.createTestAccount()
-      console.log({testAccount});
+      console.log({ testAccount });
 
       const transporter = nodemailer.createTransport({
         host: testAccount.smtp.host,
@@ -34,15 +35,21 @@ class MailService {
       // Message object
 
       // create a read stream is not secure because the process still open and it close need be manual.
-      const htmlstream = fs.createReadStream('./utils/sendemail.html')
+      const resetLink = `https://example.com/reset-password?token=${token}`;
+      //Cargar la plantilla
+      const templatePath = './utils/sendemail.html'
+      const templateContent = fs.readFileSync(templatePath, 'utf8')
+      //Compilar la planilla
+      const template = handlebars.compile(templateContent);
+
+      //Generar html con los datos
+      const htmlToSend = template({ email, resetLink })
 
       let message = {
-        from: 'Sender Name <sender@example.com>',
-        to: 'Recipient <gabriel.cerda.m@gmail.com>',
-        subject: 'Nodemailer is unicode friendly ✔',
-        text: 'Hello to myself!',
-        // html: '<p><b>Hello</b> to myself!</p>',
-        html: htmlstream
+        from: 'No reply <sender@example.com>',
+        to: email,
+        subject: 'Restablecimiento de contraseña',
+        html: htmlToSend
       };
 
       const info = await transporter.sendMail(message)
