@@ -3,9 +3,13 @@ const { authenticateToken } = require('../middlewares/authenticateToken');
 const AuthController = require('../controller/auth.controller');
 const AuthService = require('../services/auth.service');
 const UserService = require('../services/user.service');
+const MailService = require('../services/email.service');
+
 const authService = new AuthService();
 const userService = new UserService()
-const authController = new AuthController(authService,userService)
+const emailService = new MailService();
+
+const authController = new AuthController(authService,userService,emailService)
 
 const router = express.Router();
 

@@ -1,8 +1,9 @@
 class AuthController {
 
-  constructor(authService, userService) {
+  constructor(authService, userService, emailService) {
     this.authService = authService
     this.userService = userService
+    this.emailService = emailService
   }
   async login(req, res, next) {
     try {
@@ -31,11 +32,12 @@ class AuthController {
       }
 
       const token = await this.authService.generateResetPasswordToken(user.email);
+      console.log({token});
 
+      await this.emailService.send()
       // send email service here ->
       res.status(200).json({
         message: "Correo de reestablecimiento de contraseña enviado. Accede al el para reestablecer tu contraseña",
-        token
       })
     } catch (error) {
       next(error)
