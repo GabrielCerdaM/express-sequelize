@@ -5,11 +5,14 @@ Este proyecto utiliza **Express**, **PostGreSql**, **Sequelize** y **Docker** pa
 
 ## 🚀 Características
 
-- Gestión de:
-    - usuarios (autorización y autentificación) ✅
-    - clientes (🔧⚙️ en proceso)
-    - servicios (🔧⚙️ en proceso)
-    - pagos (🔧⚙️ en proceso)
+- Administración, autentificación y autorización de usuarios
+- Administración de clientes (🔧⚙️ en proceso)
+- Administración de servicios (🔧⚙️ en proceso)
+- Módulo de pagos (🔧⚙️ en proceso)
+
+## Requerimientos
+- Docker >= 27.3.1
+- Node >= 22.11
 
 ## 🛠️ Instalación
 
@@ -22,16 +25,15 @@ Este proyecto utiliza **Express**, **PostGreSql**, **Sequelize** y **Docker** pa
     touch .env
 
 ## .env 
-    PORT=
+    PORT=3000
     POSTGRES_PORT=
     POSTGRES_DB=
     POSTGRES_USER=
     POSTGRES_PASSWORD=
     POSTGRES_HOST=
     JWT_SECRET=
-z
-2. 🧰 Instalación de dependencias
 
+2. 🧰 Instalación de dependencias
     ```bash
     npm install
 
@@ -43,5 +45,23 @@ z
     ```bash
     npm run dev
 
-## La API estará disponible en http://localhost:3000
+#### Una vez ejecutado el comando, el servidor estará disponible en http://localhost:3000 o de acuerdo a la variable definida en .env
 
+# Rutas Disponibles
+
+### Autentificación
+| Método | Ruta           | Descripción              | Middleware              | Payload          | Respuesta       |
+|--------|----------------|--------------------------|------------------|------------------|-----------------|
+| GET   | `/api/v1/auth/login` | Inicia sesión de usuario | [ ] | `{ email, pass }`| `{ token, user }`|
+| GET   | `/api/v1/auth/send-email` | Solicitud token restablecimiento de contraseña |[ ] | `{}`| `{ message }`|
+| POST   | `/api/v1/auth/reset-password?token=` | Solicitud restablecimiento de contraseña | [ ] | `{ email }`| `{ boolean }`|
+
+### Usuarios
+
+| Método | Ruta | Descripción | Middlewares | Payload | Respuesta |
+|----|----|----|----|----|----|
+| GET   | `/api/v1/users/` | Obtener usuarios | [ Authentication, Authorization ] | `{}`| `{ users }`|
+| GET   | `/api/v1/users/:id` | Obtener usuario por identificador | [ Authentication, Authorization ] | `{ email, pass }`| `{ user }`|
+| POST   | `/api/v1/users/` | Crear un nuevo usuario | [ Authentication, Authorization ] | `{ email, password, role }`| `{ user }`|
+| PATCH   | `/api/v1/users/:id` | Actualizar usuario por identificador | [ Authentication, Authorization ] | `{ email, password, role }`| `{ user }`|
+| Delete | `/api/v1/users/:id` | Eliminar usuario | [ Authentication, Authorization ] | `{}`| `{ boolean }`|
