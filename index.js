@@ -4,7 +4,6 @@ const { boomErrorHandle, errorHandle, logErrors } = require('./middlewares/handl
 const serviceRouter = require('./routes/servicio.routes')
 const userRouter = require('./routes/user.routes')
 const authRouter = require('./routes/auth.routes')
-const { authenticateToken } = require('./middlewares/authenticateToken')
 
 const app = express();
 

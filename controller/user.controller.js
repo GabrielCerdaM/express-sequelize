@@ -4,10 +4,6 @@ class userController {
     this.service = userService;
   }
 
-  async generate() {
-    return false;
-  }
-
   async create(req, res, next) {
     try {
       const { email, role, password } = req.body

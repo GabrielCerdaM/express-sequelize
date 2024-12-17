@@ -10,7 +10,7 @@ const router = express.Router();
 
 
 router.post('/login', async (req, res, next) => authController.login(req, res, next))
-router.post('/logout', authenticateToken, async (req, res, next) => { }) // deshabilitar token
+router.post('/logout', authenticateToken(), async (req, res, next) => { }) // deshabilitar token
 router.post('/reset-password', async (req, res, next) => { }) // enviar mail con formulario
 
 module.exports = router

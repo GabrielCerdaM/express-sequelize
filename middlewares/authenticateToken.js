@@ -1,11 +1,15 @@
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
+const { config } = require('../config/config');
+const { jwtSecret } = config();
 
-const authenticateToken = (req, res, next) => {
-  const { body } = req
-
+const authenticateToken = (requiredRole) => (req, res, next) => {
 
   const authHeader = req.headers.authorization;
-  console.log({authHeader});
+
+  // Validar si hay encabezado y formato esperado
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    return res.status(401).json({ message: 'Acceso denegado, token requerido' });
+  }
 
   const token = authHeader && authHeader.split(' ')[1] //espera Bearer [Token]
 
@@ -14,11 +18,16 @@ const authenticateToken = (req, res, next) => {
   }
 
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET)
+    const decoded = jwt.verify(token, jwtSecret)
+
     req.user = decoded
+
+    if (decoded.role && decoded.role !== requiredRole) {
+      throw new Error("Permisos insuficientes");
+    }
     next()
   } catch (error) {
-    return res.status(403).json({ message: 'Token no válido o expirado' })
+    next(error)
   }
 }
 
