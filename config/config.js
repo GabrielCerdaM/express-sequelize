@@ -1,13 +1,29 @@
 require('dotenv').config()
 
-const config = {
-  env: process.env.NODE_ENV || 'env',
-  port: process.env.PORT || 3000,
-  dbUser: process.env.POSTGRES_USER,
-  dbPassword: process.env.POSTGRES_PASSWORD,
-  dbHost: process.env.POSTGRES_HOST,
-  dbName: process.env.POSTGRES_DB,
-  dbPort: process.env.POSTGRES_PORT,
+const {
+  NODE_ENV,
+  PORT,
+  POSTGRES_USER,
+  POSTGRES_PASSWORD,
+  POSTGRES_HOST,
+  POSTGRES_DB,
+  POSTGRES_PORT,
+  JWT_SECRET,
+  USER_PASS_TEMP
+} = process.env;
+
+const config = () => {
+  return {
+    env: NODE_ENV || 'env',
+    port: PORT || 3000,
+    dbUser: POSTGRES_USER,
+    dbPassword: POSTGRES_PASSWORD,
+    dbHost: POSTGRES_HOST,
+    dbName: POSTGRES_DB,
+    dbPort: POSTGRES_PORT,
+    jwtSecret: JWT_SECRET,
+    userPassTemp: USER_PASS_TEMP
+  }
 }
 
 module.exports = { config }

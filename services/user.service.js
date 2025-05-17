@@ -1,33 +1,44 @@
 const boom = require('@hapi/boom');
 const { models } = require('../libs/sequelize');
-const { Op } = require('sequelize')
+const { Op, where } = require('sequelize')
 const { generateUser } = require('../utils/helper');
 const { hash, compare } = require('../utils/bcrypt')
-const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
+const { config } = require('../config/config')
+const { userPassTemp } = config();
 
 class UserService {
   constructor() {
-    // this.generate()
+    this.generate()
   }
 
   async generate() {
-    await models.User.truncate();
+    await models.User.truncate({ cascade: true, restartIdentity: true, force: true });
 
-    const limit = 5
+    const password = await hash(userPassTemp)
 
-    const newUser = {
+    const users = [{
       email: "admin@admin.cl",
-      password: "admin"
-    }
+      role: 'admin',
+      password
+    },
+    {
+      email: "gcm@gmail.com",
+      role: 'user',
+      password
+    }]
 
-    const password = await hash(newUser.password)
 
-    await models.User.create({ ...newUser, password });
+    await models.User.bulkCreate(users);
 
     for await (const element of [1, 2, 3, 4, 5]) {
       const user = generateUser();
+<<<<<<< HEAD
+      // const password = await hash(user.password)
+=======
+
       const password = await hash(user.password)
+>>>>>>> resend
 
       await models.User.create({ ...user, password });
       // this.services.push(service)
@@ -46,8 +57,21 @@ class UserService {
       const newUser = await models.User.create({ ...data, password: hashed })
       return { id: newUser.id, email: newUser.email, createdAt: newUser.createdAt }
     } catch (error) {
-      console.log({type: typeof error});
+<<<<<<< HEAD
+      console.log({ type: typeof error });
       console.log(error.isBoom);
+=======
+      throw new Error(error);
+    }
+  }
+
+  async resetPassword(id, password) {
+    try {
+      const salt = await bcrypt.genSalt(12);
+      const hashed = await bcrypt.hash(password, salt)
+      return await models.User.update({ password: hashed }, { where: { id } })
+    } catch (error) {
+>>>>>>> resend
       throw new Error(error);
     }
   }
@@ -65,6 +89,20 @@ class UserService {
     return user
   }
 
+  async findByEmail(email) {
+    const user = await models.User.findOne({ where: { email } })
+    if (!user) {
+      throw new Error('Usuario no encontrado')
+    }
+
+    if (user.length <= 0) {
+      throw new Error("Usuario no encontrado");
+    }
+
+    return user
+  }
+
+
   // ⚠️-> be careull with password field, it need more security levels
   async update(id, changes) {
     try {
@@ -77,7 +115,6 @@ class UserService {
 
   async delete(id) {
     const userDeleted = await models.User.destroy({ where: { id } })
-    console.log({ userDeleted });
 
     if (!userDeleted) {
       throw new Error('Error al eliminar usuario')

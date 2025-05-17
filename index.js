@@ -4,7 +4,6 @@ const { boomErrorHandle, errorHandle, logErrors } = require('./middlewares/handl
 const serviceRouter = require('./routes/servicio.routes')
 const userRouter = require('./routes/user.routes')
 const authRouter = require('./routes/auth.routes')
-const { authenticateToken } = require('./middlewares/authenticateToken')
 
 const app = express();
 
@@ -14,7 +13,7 @@ const router = express.Router();
 app.use(express.json())
 app.use('/api/v1', router)
 
-router.use('/servicio', serviceRouter)
+router.use('/servicios', serviceRouter)
 
 router.use('/users', userRouter)
 
