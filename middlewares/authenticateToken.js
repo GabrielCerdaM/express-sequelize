@@ -23,7 +23,7 @@ const authenticateToken = (requiredRole) => (req, res, next) => {
     req.user = decoded
 
     if (decoded.role && decoded.role !== requiredRole) {
-      throw new Error("Permisos insuficientes");
+      throw new Error("No tienes los permisos necesarios para realizar esta acción");
     }
     next()
   } catch (error) {

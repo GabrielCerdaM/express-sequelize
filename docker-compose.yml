@@ -1,4 +1,19 @@
 services:
+  backend:
+    build: .
+    volumes:
+      - .:/app
+      - /app/node_modules
+    ports:
+      - "3000:3000"
+    environment:
+      - DB_HOST=postgres
+      - DB_USER=saitama
+      - DB_PASSWORD=saitama123
+      - DB_NAME=saitama
+      - POSTGRES_PORT=5432
+    depends_on:
+      - postgres
   postgres:
     image: postgres:13
     environment:
@@ -8,7 +23,7 @@ services:
     ports:
       - 5432:5432
     volumes:
-      - ./postgres_data:/var/lib/postgressq/data
+      - ./postgres_data:/var/lib/postgresql/data
   pgadmin:
     image: dpage/pgadmin4
     environment:
@@ -16,3 +31,5 @@ services:
       - PGADMIN_DEFAULT_PASSWORD=ROOT
     ports:
       - 5050:80
+    depends_on:
+      - postgres

@@ -22,6 +22,17 @@ class MailService {
       const testAccount = await nodemailer.createTestAccount()
       console.log({ testAccount });
 
+
+      // Looking to send emails in production? Check out our Email API/SMTP product!
+      // var transport = nodemailer.createTransport({
+      //   host: "sandbox.smtp.mailtrap.io",
+      //   port: 2525,
+      //   auth: {
+      //     user: "2d0638dfbcef7d",
+      //     pass: "****afdb"
+      //   }
+      // });
+
       const transporter = nodemailer.createTransport({
         host: testAccount.smtp.host,
         port: testAccount.smtp.port,
