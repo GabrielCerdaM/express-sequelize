@@ -8,9 +8,11 @@ const authRouter = require('./routes/auth.routes')
 const app = express();
 
 const port = 3000;
+
 const router = express.Router();
 
 app.use(express.json())
+
 app.use('/api/v1', router)
 
 router.use('/servicios', serviceRouter)

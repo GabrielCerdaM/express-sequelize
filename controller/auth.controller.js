@@ -22,6 +22,7 @@ class AuthController {
       const { body } = req
 
       const { email } = body
+
       if (!email) {
         throw new Error("Email no encontrado");
       }
@@ -33,7 +34,7 @@ class AuthController {
 
       const token = await this.authService.generateResetPasswordToken(user.email);
 
-      await this.emailService.send(user.email,token)
+      await this.emailService.send(user.email, token)
       // send email service here ->
       res.status(200).json({
         message: "Correo de reestablecimiento de contraseña enviado. Accede al el para reestablecer tu contraseña",

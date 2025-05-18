@@ -1,5 +1,5 @@
-const { Resend } = require('resend');
-const { config } = require('../config/email.config');
+// const { Resend } = require('resend');
+// const { config } = require('../config/email.config');
 const nodemailer = require('nodemailer')
 const handlebars = require('handlebars')
 const fs = require('fs')
@@ -20,8 +20,6 @@ class MailService {
     // Generate SMTP service account from ethereal.email
     try {
       const testAccount = await nodemailer.createTestAccount()
-      console.log({ testAccount });
-
 
       // Looking to send emails in production? Check out our Email API/SMTP product!
       // var transport = nodemailer.createTransport({
