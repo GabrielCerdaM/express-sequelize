@@ -5,6 +5,7 @@ class AuthController {
     this.userService = userService
     this.emailService = emailService
   }
+
   async login(req, res, next) {
     try {
       const { email, password } = req.body
@@ -50,10 +51,14 @@ class AuthController {
 
       const { token } = req.query
 
-      const { password } = req.body
+      const { password, password_confirm } = req.body
 
-      if (!password) {
+      if (!password && !password_confirm) {
         throw new Error("La contraseña no puede estar vacia");
+      }
+
+      if (password !== password_confirm) {
+        throw new Error("Las contraseña deben coincidir");
       }
 
       if (!token) {
@@ -63,7 +68,7 @@ class AuthController {
       const user = await this.authService.verifyToken(token);
 
       if (!user) {
-        throw new Error("La información no es consistente");
+        throw new Error("La petición de información no es consistente, el token no es válido");
       }
 
       const success = await this.userService.resetPassword(user.id, password)
@@ -71,6 +76,7 @@ class AuthController {
       if (success[0] === 0) {
         throw new Error("No es posible actualizar la contraseña");
       }
+
       res.status(200).json(true)
     } catch (error) {
       next(error)

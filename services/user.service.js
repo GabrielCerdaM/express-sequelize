@@ -9,33 +9,45 @@ const { userPassTemp } = config();
 
 class UserService {
   constructor() {
-    // this.generate()
+    this.generate()
   }
 
   async generate() {
-    await models.User.truncate({ cascade: true, restartIdentity: true, force: true });
 
-    const salt = await bcrypt.genSalt(12);
-    const password = await bcrypt.hash(userPassTemp, salt); // bcrypt genera el salt automáticamente
+    try {
+      try {
+        await models.User.truncate({ cascade: true, restartIdentity: true, force: true });
+      } catch (error) {
+        console.log({ truncateError: error });
+      }
+      // return
+      const salt = await bcrypt.genSalt(12);
+      const passHashed = await bcrypt.hash(userPassTemp, salt)
 
-    const users = [{
-      email: "admin@admin.cl",
-      role: 'admin',
-      password
-    },
-    {
-      email: "gcm@gmail.com",
-      role: 'user',
-      password
-    }]
+      const admin = generateUser();
+      admin.password = passHashed
+      admin.email = "admin@admin.cl"
+      admin.role = 'admin';
 
+      const seller = generateUser();
+      seller.password = passHashed
+      seller.email = "seller@gmail.cl"
+      seller.role = 'user';
 
-    await models.User.bulkCreate(users);
+      const users = [admin, seller]
 
-    for await (const element of [1, 2, 3, 4, 5]) {
-      const user = generateUser();
-      const password = await hash(user.password)
-      await models.User.create({ ...user, password });
+      await models.User.bulkCreate(users);
+
+      for await (const element of [1, 2, 3, 4, 5]) {
+        const user = generateUser();
+        // const password = await hash(user.password)
+        const salt = await bcrypt.genSalt(12);
+        const hashed = await bcrypt.hash(user.password, salt)
+
+        await models.User.create({ ...user, password: hashed });
+      }
+    } catch (error) {
+      console.log({ error });
     }
   }
 

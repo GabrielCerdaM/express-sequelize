@@ -44,7 +44,7 @@ class MailService {
       // Message object
 
       // create a read stream is not secure because the process still open and it close need be manual.
-      const resetLink = `https://example.com/reset-password?token=${token}`;
+      const resetLink = `http://localhost:3000/api/v1/auth/reset-password?token=${token}`;
       //Cargar la plantilla
       const templatePath = './utils/sendemail.html'
       const templateContent = fs.readFileSync(templatePath, 'utf8')

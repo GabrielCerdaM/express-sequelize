@@ -13,7 +13,7 @@ const setupModels = require('../db/models/index')
 
 const USER = encodeURIComponent(dbUser)
 const PASSWORD = encodeURIComponent(dbPassword)
-const URI = `postgresql://${USER}:${PASSWORD}@${dbHost}:${dbPort}/saitama`
+const URI = `postgresql://${USER}:${PASSWORD}@${dbHost}:${dbPort}/${dbName}`
 
 const sequelize = new Sequelize(URI, {
   dialect: 'postgres',

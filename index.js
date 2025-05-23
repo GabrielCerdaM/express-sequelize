@@ -1,7 +1,7 @@
 const express = require('express')
 const { boomErrorHandle, errorHandle, logErrors } = require('./middlewares/handleError')
 
-const serviceRouter = require('./routes/servicio.routes')
+const serviceRouter = require('./routes/services.routes')
 const userRouter = require('./routes/user.routes')
 const authRouter = require('./routes/auth.routes')
 
@@ -15,11 +15,13 @@ app.use(express.json())
 
 app.use('/api/v1', router)
 
-router.use('/servicios', serviceRouter)
+router.use('/auth', authRouter)
 
 router.use('/users', userRouter)
 
-router.use('/auth', authRouter)
+router.use('/services', serviceRouter)
+
+
 
 app.use(logErrors)
 app.use(boomErrorHandle);
