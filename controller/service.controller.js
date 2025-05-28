@@ -1,7 +1,6 @@
 class serviceController {
 
   constructor(servicesService) {
-    // console.log({ servicesService });
     this.service = servicesService
   }
 
@@ -17,6 +16,7 @@ class serviceController {
       time_cementery
     } = req.body
     try {
+
       const response = await this.service.create({
         type
         , price
@@ -27,10 +27,8 @@ class serviceController {
         , place_cementery
         , time_cementery
       })
-      console.log({ response });
 
       res.status(200).json({ response })
-
     } catch (error) {
       res.status(500).json({ error })
     }
@@ -43,8 +41,6 @@ class serviceController {
 
   async findOne(req, res, next) {
     const { id } = req.params
-
-    console.log({ params: req.params });
 
     const service = await this.service.findOne(id)
     res.status(200).json({ service })
@@ -64,24 +60,37 @@ class serviceController {
       , time_cementery
     } = req.body
 
-    console.log({
-      id
-      , type
-      , price
-      , installed
-      , velatory
-      , place_ceremony
-      , time_ceremony
-      , place_cementery
-      , time_cementery
-    });
+    // requiere validar si el registro existe y generar las modificaciones necesarias
+    // -> this.service.findOne(id)
+    try {
+      const service = await this.service.findOne(id)
 
-    res.status(200).json({ id })
+      if (!service) {
+        throw new Error(`No existe el servicio con id ${id}`);
+      }
+
+      const response = await this.service.update(id, {
+        type
+        , price
+        , installed
+        , velatory
+        , place_ceremony
+        , time_ceremony
+        , place_cementery
+        , time_cementery
+      })
+
+      res.status(200).send(true)
+
+    } catch (error) {
+      res.status(500).json({ error: error.message })
+    }
   }
 
   async delete(req, res, next) {
     const { id } = req.body
-    res.status(200).json({ id })
+    const response = await this.service.delete(id)
+    res.status(200).json({ response })
   }
 }
 

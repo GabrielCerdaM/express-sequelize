@@ -8,7 +8,7 @@ const { config } = require('../config/config')
 
 // GET
 router.get('/generate', (req, res) => {
-  servicesService.generate();
+  // servicesService.generate();
   const services = servicesService.find()
   return res.status(200).json(services)
 })

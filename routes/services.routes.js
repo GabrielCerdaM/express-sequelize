@@ -14,6 +14,6 @@ routes.get('/', validateSchemaHandler(getSchema, 'body'), serviceController.find
 routes.get('/:id', validateSchemaHandler(getSchema, 'params'), serviceController.findOne.bind(serviceController))
 routes.post('/', validateSchemaHandler(createSchema, 'body'), serviceController.create.bind(serviceController))
 routes.patch('/:id', validateSchemaHandler(updateSchema, 'body'), serviceController.update.bind(serviceController))
-routes.delete('/:id', validateSchemaHandler(deleteSchema, ''), serviceController.delete.bind(serviceController))
+routes.delete('/', validateSchemaHandler(deleteSchema, 'body'), serviceController.delete.bind(serviceController))
 
 module.exports = routes

@@ -12,8 +12,6 @@ const errorHandle = (err, req, res, next) => {
 
 const boomErrorHandle = (err, req, res, next) => {
   if (err.isBoom) {
-    console.log({isBoomb: err});
-
     const { output } = err
     res.status(output.statusCode).json(output.payload)
   } else {

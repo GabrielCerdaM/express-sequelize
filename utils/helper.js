@@ -1,8 +1,9 @@
-const generateUser = () => {
+const generateUser = (role = null) => {
   const { faker } = require('@faker-js/faker')
 
   const user = {
     id: faker.string.uuid(),
+    role: role ? role : 'guest',
     email: faker.person.firstName(),
     password: faker.string.alphanumeric({ length: { min: 6, max: 12 } }),
     createdAt: faker.date.anytime()
@@ -24,9 +25,7 @@ const generateService = () => {
   const CEMENTERIO = ['Cementerio Municipal de Melipilla', 'Las Flores', 'Las Rosas']
   const DATE = faker.date.between({ from: '2022-01-01', to: '2024-11-10' })
   const datetime = new Date(DATE);
-  console.log({ datetime });
   datetime.setHours(15, 0, 0)
-  console.log({ datetime });
 
   const urna_precio = [faker.number.int({ min: 0, max: 3 })];
 

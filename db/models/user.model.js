@@ -1,4 +1,4 @@
-const { Model, DataTypes, Sequelize } = require('sequelize')
+const { Model, DataTypes } = require('sequelize')
 const USER_TABLE = 'users';
 
 const UserSchema = {
@@ -8,9 +8,9 @@ const UserSchema = {
     type: DataTypes.UUID
   },
   role: {
-    type: DataTypes.ENUM('admin', 'user', 'guest'),
+    type: DataTypes.ENUM('admin', 'user', 'client', 'guest'),
     allowNull: false,
-    defaultValue: 'user'
+    defaultValue: 'guest'
   },
   email: {
     allowNull: false,
@@ -25,7 +25,7 @@ const UserSchema = {
     allowNull: false,
     type: DataTypes.DATE,
     field: 'created_at',
-    defaultValue: Sequelize.NOW
+    defaultValue: DataTypes.NOW
   }
 }
 

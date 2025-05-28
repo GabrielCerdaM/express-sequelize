@@ -1,15 +1,13 @@
 const { Sequelize } = require('sequelize')
 
-const { config } = require('../config/config')
-const {
-  dbHost,
+const { dbHost,
   dbPort,
   dbName,
   dbUser,
-  dbPassword
-} = config()
+  dbPassword } = require('../config/config')
 
 const setupModels = require('../db/models/index')
+const { log } = require('handlebars/runtime')
 
 const USER = encodeURIComponent(dbUser)
 const PASSWORD = encodeURIComponent(dbPassword)
@@ -28,8 +26,15 @@ const sequelize = new Sequelize(URI, {
 
 
 
-setupModels(sequelize)
+// async () => {
+//   // await sequelize.drop()
+//   await sequelize.models.forEach(tableSchema => {
+//     console.log({ tableSchema });
 
-sequelize.sync()
+//   });
+// }
+
+setupModels(sequelize)
+sequelize.sync({ force: true })
 
 module.exports = sequelize

@@ -1,58 +1,58 @@
 const { faker } = require("@faker-js/faker");
 const { generateService } = require("../utils/helper");
 const boom = require("@hapi/boom");
-const { models } = require('../libs/sequelize')
+const { models } = require('../libs/sequelize');
+// const { env } = require("../config/config");
 
 class ServiceService {
 
   constructor() {
-    this.generate();
+    // this.generate();
   }
 
   async generate() {
     const limit = 5
-    models.Services.truncate({ cascade: true, force: true, restartIdentity: true })
+    models.Service.truncate({ cascade: true, force: true, restartIdentity: true })
+
     for (let index = 0; index < limit; index++) {
       const service = generateService();
-      await models.Services.create({ ...service })
+      await models.Service.create({ ...service })
     }
   }
 
   async create(data) {
-    console.log({ data });
-
+    // -> FIX
     const newService = {
       id: faker.string.uuid(),
       ...data
     }
 
+
     try {
-      return await models.Services.create({ ...newService })
+      return await models.Service.create({ ...newService })
     } catch (error) {
-      console.log(error);
-      return error
+      return error.message
     }
   }
 
   async find() {
     try {
-      return await models.Services.findAll()
+      return await models.Service.findAll()
     } catch (error) {
       console.error({ error });
+      return error.message
     }
   }
 
   async findOne(id) {
     try {
-      const services = await models.Services.findByPk(id)
-      console.log({ services });
-
+      const services = await models.Service.findByPk(id)
       if (!services) {
         throw new Error('No hay registros')
       }
       return services
     } catch (error) {
-
+      return error.message
     }
 
   }
@@ -63,32 +63,25 @@ class ServiceService {
   //   }
   // }
 
-  // async update(id, changes) {
-  //   let service;
-  //   const index = this.services.findIndex(item => item.id == id);
-  //   if (index === -1) {
-  //     throw new Error("Servicio no encontrado");
-  //   }
-  //   service = this.services[index];
-  //   this.services[index] = {
-  //     ...service,
-  //     ...changes
-  //   }
-  // }
+  async update(id, changes) {
+    try {
+      return await models.Service.update({ ...changes }, { where: { id } })
+    } catch (error) {
+      console.log({ error });
+      return error.message
+    }
+  }
 
-  // async delete(id) {
-  //   if (!id) {
-  //     return false
-  //   }
-  //   for (let index = 0; index < this.services[index]; index++) {
-  //     const s = array[index];
-  //     if (id === s.id) {
-  //       this.services.splice(index);
-  //       return { id: this.services[index].id }
-  //     }
-  //   }
-  //   return false;
-  // }
+  async delete(id) {
+    try {
+      if (!id) {
+        throw new Error(`No se encuentra el registro con id ${id}`);
+      }
+      return await models.Service.destroy({ where: { id } })
+    } catch (error) {
+      return error.message
+    }
+  }
 }
 
 module.exports = ServiceService

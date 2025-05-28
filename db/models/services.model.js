@@ -49,7 +49,7 @@ class Services extends Model {
     return {
       sequelize,
       tableName: SERVICE_TABLE,
-      modelName: 'Services',
+      modelName: 'Service',
       timestamps: true
     }
   }

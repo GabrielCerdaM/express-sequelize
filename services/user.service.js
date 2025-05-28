@@ -4,12 +4,11 @@ const { Op, where } = require('sequelize')
 const { generateUser } = require('../utils/helper');
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
-const { config } = require('../config/config')
-const { userPassTemp } = config();
+const { userPassTemp } = require('../config/config')
 
 class UserService {
   constructor() {
-    this.generate()
+    // this.generate()
   }
 
   async generate() {
@@ -20,6 +19,7 @@ class UserService {
       } catch (error) {
         console.log({ truncateError: error });
       }
+
       // return
       const salt = await bcrypt.genSalt(12);
       const passHashed = await bcrypt.hash(userPassTemp, salt)

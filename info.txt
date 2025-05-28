@@ -1,0 +1,9 @@
+  /*   Requiere aplicar
+    las reglas de negocio al controlador
+    y no en los modelos, requiere revisar para
+    - user.uservice
+    - auth.service
+    - email.service
+    - service.service
+    - urn.service
+    */
