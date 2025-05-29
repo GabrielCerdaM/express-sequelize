@@ -22,8 +22,6 @@ module.exports = {
     const user = generateUser();
     user.password = await bcrypt.hash('user', salt)
 
-    console.log({ admin, user });
-
     // await queryInterface.bulkInsert('User', [user], {});
   },
 

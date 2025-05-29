@@ -1,8 +1,9 @@
 const { faker } = require("@faker-js/faker");
 const { generateService } = require("../utils/helper");
 const boom = require("@hapi/boom");
-const { models } = require('../libs/sequelize');
-// const { env } = require("../config/config");
+// const { models } = require('../libs/sequelize');
+const models = require('../models/index')
+// const { env } = require("../config/env.config");
 
 class ServiceService {
 
@@ -22,14 +23,14 @@ class ServiceService {
 
   async create(data) {
     // -> FIX
-    const newService = {
-      id: faker.string.uuid(),
-      ...data
-    }
+    // const newService = {
+    //   id: faker.string.uuid(),
+    //   ...data
+    // }
 
 
     try {
-      return await models.Service.create({ ...newService })
+      return await models.Service.create({ ...data })
     } catch (error) {
       return error.message
     }
@@ -37,6 +38,8 @@ class ServiceService {
 
   async find() {
     try {
+      console.log({ models });
+
       return await models.Service.findAll()
     } catch (error) {
       console.error({ error });

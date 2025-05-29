@@ -4,7 +4,7 @@ const { Op, where } = require('sequelize')
 const { generateUser } = require('../utils/helper');
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
-const { userPassTemp } = require('../config/config')
+const { userPassTemp } = require('../config/env.config')
 
 class UserService {
   constructor() {

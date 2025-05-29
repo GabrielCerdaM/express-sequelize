@@ -4,9 +4,9 @@ const { dbHost,
   dbPort,
   dbName,
   dbUser,
-  dbPassword } = require('../config/config')
+  dbPassword } = require('../config/env.config')
 
-const setupModels = require('../db/models/index')
+// const setupModels = require('../db/models/index')
 const { log } = require('handlebars/runtime')
 
 const USER = encodeURIComponent(dbUser)
@@ -34,7 +34,7 @@ const sequelize = new Sequelize(URI, {
 //   });
 // }
 
-setupModels(sequelize)
+// setupModels(sequelize)
 sequelize.sync({ force: true })
 
 module.exports = sequelize
