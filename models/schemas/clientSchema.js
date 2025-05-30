@@ -36,15 +36,5 @@ module.exports = (dataTypes) => ({
     },
     onUpdate: 'CASCADE',
     onDelete: 'RESTRICT' // o 'SET NULL' si quieres permitir que cliente quede sin usuario
-  },
-  created_at: {
-    type: dataTypes.DATE,
-    allowNull: false,
-    defaultValue: dataTypes.NOW
-  },
-  updated_at: {
-    type: dataTypes.DATE,
-    allowNull: false,
-    defaultValue: dataTypes.NOW
   }
 })

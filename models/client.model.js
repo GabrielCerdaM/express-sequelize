@@ -19,7 +19,7 @@ class Client extends Model {
       sequelize,
       tableName: CLIENT_TABLE,
       modelName: "Client",
-      timestamps: false
+      timestamps: true
     }
   }
 }

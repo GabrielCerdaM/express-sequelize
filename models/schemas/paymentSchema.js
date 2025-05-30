@@ -36,10 +36,5 @@ module.exports = (dataTypes) => ({
     },
     onDelete: 'SET NULL',
     onUpdate: 'CASCADE'
-  },
-  created_at: {
-    allowNull: false,
-    type: dataTypes.DATE,
-    defaultValue: dataTypes.NOW
   }
 })

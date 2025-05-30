@@ -19,15 +19,5 @@ module.exports = (dataTypes) => ({
   password: {
     allowNull: false,
     type: dataTypes.STRING
-  },
-  created_at: {
-    allowNull: false,
-    type: dataTypes.DATE,
-    defaultValue: dataTypes.NOW
-  },
-  updated_at: {
-    allowNull: false,
-    type: dataTypes.DATE,
-    defaultValue: dataTypes.NOW
   }
 })

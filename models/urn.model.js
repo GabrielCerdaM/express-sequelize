@@ -16,7 +16,7 @@ class Urn extends Model {
       sequelize,
       tableName: URN_TABLE,
       modelName: "Urn",
-      timestamps: false
+      timestamps: true
     }
   }
 }

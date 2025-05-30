@@ -17,6 +17,7 @@ class Payment extends Model {
       sequelize,
       tableName: PAYMENT_TABLE,
       modelName: 'Payment',
+      timestamps: true
     }
   }
 }

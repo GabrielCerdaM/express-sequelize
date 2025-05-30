@@ -6,7 +6,7 @@ const generateUser = (role = null) => {
     role: role ? role : 'guest',
     email: faker.person.firstName(),
     password: faker.string.alphanumeric({ length: { min: 6, max: 12 } }),
-    createdAt: faker.date.anytime()
+    // createdAt: faker.date.anytime()
   }
 
   return user;

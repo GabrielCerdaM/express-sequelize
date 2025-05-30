@@ -3,25 +3,25 @@ const SERVICE_TABLE = 'services'
 const getServiceSchema = require('./schemas/serviceSchema')
 class Services extends Model {
   static associate(models) {
-    // Services.belongsTo(models.Client, {
-    //   foreignKey: 'client_id',
-    //   onUpdate: 'CASCADE',
-    //   onDelete: 'RESTRICT'
-    // });
+    Services.belongsTo(models.Client, {
+      foreignKey: 'client_id',
+      onUpdate: 'CASCADE',
+      onDelete: 'RESTRICT'
+    });
 
-    // Services.belongsTo(models.Urn, {
-    //   foreignKey: 'urn_id',
-    //   as: 'urn',
-    //   onUpdate: 'CASCADE',
-    //   onDelete: 'SET NULL'
-    // });
+    Services.belongsTo(models.Urn, {
+      foreignKey: 'urn_id',
+      as: 'urn',
+      onUpdate: 'CASCADE',
+      onDelete: 'SET NULL'
+    });
 
-    // Services.hasMany(models.Payment, {
-    //   foreignKey: 'service_id',
-    //   as: 'payments',
-    //   onUpdate: 'CASCADE',
-    //   onDelete: 'SET NULL'
-    // });
+    Services.hasMany(models.Payment, {
+      foreignKey: 'service_id',
+      as: 'payments',
+      onUpdate: 'CASCADE',
+      onDelete: 'SET NULL'
+    });
   }
   static config(sequelize) {
     return {

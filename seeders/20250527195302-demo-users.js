@@ -1,38 +1,35 @@
 'use strict';
 
 const { generateUser } = require('../utils/helper');
+const { userAdminId, userClientId, userGuestId } = require('../utils/seed-ids')
+const bcrypt = require('bcryptjs')
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    /**
-     * Add seed commands here.
-     *
-     * Example:
-     * await queryInterface.bulkInsert('People', [{
-     *   name: 'John Doe',
-     *   isBetaMember: false
-     * }], {});
-    */
     const salt = await bcrypt.genSalt(12);
     const admin = generateUser();
+    admin.id = userAdminId;
     admin.role = 'admin';
     admin.password = await bcrypt.hash('admin', salt)
 
     const user = generateUser();
-    user.password = await bcrypt.hash('user', salt)
+    user.id = userGuestId;
+    user.role = 'guest'
+    user.password = await bcrypt.hash('guest', salt)
 
-    // await queryInterface.bulkInsert('User', [user], {});
+    const client = generateUser();
+    client.id = userClientId;
+    user.role = 'client'
+    client.password = await bcrypt.hash('client', salt)
+
+    console.log({ admin, user, client });
+
+    await queryInterface.bulkInsert('users', [user, admin, client], {});
   },
 
   async down(queryInterface, Sequelize) {
-    /**
-     * Add commands to revert seed here.
-     *
-     * Example:
-     * await queryInterface.bulkDelete('People', null, {});
-     */
-    await queryInterface.bulkDelete('User', null, {});
+    await queryInterface.bulkDelete('users', null, {});
 
   }
 };

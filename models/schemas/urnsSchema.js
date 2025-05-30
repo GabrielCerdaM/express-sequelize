@@ -41,15 +41,5 @@ module.exports = (dataTypes) => ({
   observations: {
     type: dataTypes.TEXT,
     allowNull: true
-  },
-  created_at: {
-    type: dataTypes.DATE,
-    allowNull: false,
-    defaultValue: dataTypes.NOW
-  },
-  updated_at: {
-    type: dataTypes.DATE,
-    allowNull: false,
-    defaultValue: dataTypes.NOW
   }
 })
