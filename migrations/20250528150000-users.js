@@ -5,7 +5,7 @@ const getUserSchema = require('../models/schemas/userSchema')
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('users', getUserSchema(Sequelize));
+    await queryInterface.createTable('users', getUserSchema(Sequelize.DataTypes, Sequelize, true));
   },
 
   async down(queryInterface, Sequelize) {

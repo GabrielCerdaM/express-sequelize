@@ -12,6 +12,7 @@ const { log } = require('handlebars/runtime')
 const USER = encodeURIComponent(dbUser)
 const PASSWORD = encodeURIComponent(dbPassword)
 const URI = `postgresql://${USER}:${PASSWORD}@${dbHost}:${dbPort}/${dbName}`
+console.log({ URI });
 
 const sequelize = new Sequelize(URI, {
   dialect: 'postgres',

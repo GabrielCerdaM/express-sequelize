@@ -11,7 +11,7 @@ module.exports = {
      * Example:
      * await queryInterface.createTable('payments', { id: Sequelize.INTEGER });
      */
-    await queryInterface.createTable('payments', getPaymentSchema(Sequelize));
+    await queryInterface.createTable('payments', getPaymentSchema(Sequelize.DataTypes, Sequelize, true));
   },
 
   async down(queryInterface, Sequelize) {

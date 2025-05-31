@@ -1,4 +1,4 @@
-const { Model } = require("sequelize")
+const { Model, DataTypes, Sequelize } = require("sequelize")
 const URN_TABLE = 'urns'
 const getUrnSchema = require('./schemas/urnsSchema')
 
@@ -6,7 +6,7 @@ class Urn extends Model {
   static associate(models) {
     Urn.hasMany(models.Service, {
       foreignKey: 'urn_id',
-      as: 'services',
+      as: 'urn',
       onUpdate: 'SET NULL',
       onDelete: 'SET NULL'
     });
@@ -21,7 +21,7 @@ class Urn extends Model {
   }
 }
 
-module.exports = (sequelize, DataTypes) => {
-  Urn.init(getUrnSchema(DataTypes), Urn.config(sequelize))
+module.exports = (sequelize) => {
+  Urn.init(getUrnSchema(DataTypes, Sequelize), Urn.config(sequelize))
   return Urn
 }

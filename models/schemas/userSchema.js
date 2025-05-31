@@ -1,23 +1,39 @@
-module.exports = (dataTypes) => ({
+module.exports = (DataTypes, Sequelize, isMigration = false) => ({
   id: {
     allowNull: false,
     primaryKey: true,
-    type: dataTypes.UUID,
-    defaultValue: dataTypes.UUIDV4
-    // defaultValue: dataTypes.literal('gen_random_uuid()') // o dataTypes.UUIDV4 si no usas extensión pgcrypto
+    type: DataTypes.UUID,
+    defaultValue: DataTypes.UUID
+    // defaultValue: DataTypes.literal('gen_random_uuid()') // o DataTypes.UUIDV4 si no usas extensión pgcrypto
   },
   role: {
-    type: dataTypes.ENUM('admin', 'user', 'client', 'guest'),
+    type: DataTypes.ENUM('admin', 'user', 'client', 'guest'),
     allowNull: false,
     defaultValue: 'guest'
   },
   email: {
     allowNull: false,
-    type: dataTypes.STRING,
+    type: DataTypes.STRING,
     unique: true
   },
   password: {
     allowNull: false,
-    type: dataTypes.STRING
+    type: DataTypes.STRING
+  },
+  createdAt: {
+    allowNull: false,
+    type: DataTypes.DATE,
+    field: 'created_at',
+    defaultValue: isMigration ? Sequelize.fn('NOW') : Sequelize.literal('NOW()')
+    // defaultValue: Sequelize.literal('NOW()')
+    // defaultValue: DataTypes.NOW
+  },
+  updatedAt: {
+    allowNull: false,
+    type: DataTypes.DATE,
+    field: 'updated_at',
+    defaultValue: isMigration ? Sequelize.fn('NOW') : Sequelize.literal('NOW()')
+    // defaultValue: Sequelize.literal('NOW()')
+    // defaultValue: DataTypes.NOW
   }
 })

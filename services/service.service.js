@@ -1,7 +1,7 @@
 const { faker } = require("@faker-js/faker");
 const { generateService } = require("../utils/helper");
 const boom = require("@hapi/boom");
-// const { models } = require('../libs/sequelize');
+// const db = require('../models/index')
 const models = require('../models/index')
 // const { env } = require("../config/env.config");
 

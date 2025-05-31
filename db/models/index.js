@@ -1,10 +1,10 @@
 
 function setupModels(sequelize) {
-  // User.init(UserSchema, User.config(sequelize))
-  // Services.init(ServiceSchema, Services.config(sequelize))
-  // Client.init(ClientSchema, Client.config(sequelize))
-  // Payment.init(PaymentSchema, Payment.config(sequelize))
-  // Urn.init(UrnSchema, Urn.config(sequelize))
+  // User.init(UserSchema, User.config(sequelizeInstance))
+  // Services.init(ServiceSchema, Services.config(sequelizeInstance))
+  // Client.init(ClientSchema, Client.config(sequelizeInstance))
+  // Payment.init(PaymentSchema, Payment.config(sequelizeInstance))
+  // Urn.init(UrnSchema, Urn.config(sequelizeInstance))
 
   // // # association User - Client
   // User.hasOne(Client, {

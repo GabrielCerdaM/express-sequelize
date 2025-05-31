@@ -1,14 +1,15 @@
-const { Model } = require("sequelize");
+const { Model, DataTypes, Sequelize } = require("sequelize");
 
 const CLIENT_TABLE = 'clients'
 const getClientSchema = require('./schemas/clientSchema')
 class Client extends Model {
   static associate(models) {
     // # association User - Client
-    Client.belongsTo(models.User, {})
+    Client.belongsTo(models.User, { foreignKey: 'client_id', as: 'client' })
 
     // # association Client - Services
     Client.hasMany(models.Service, {
+      foreignKey: 'client_id',
       onDelete: 'SET NULL',
       onUpdate: 'CASCADE'
     })
@@ -24,7 +25,7 @@ class Client extends Model {
   }
 }
 // ✅ Aquí exportas una función que define e inicializa el modelo
-module.exports = (sequelize, DataTypes) => {
-  Client.init(getClientSchema(DataTypes), Client.config(sequelize));
+module.exports = (sequelize) => {
+  Client.init(getClientSchema(DataTypes, Sequelize), Client.config(sequelize));
   return Client;
 };

@@ -1,34 +1,34 @@
-module.exports = (dataTypes) => ({
+module.exports = (DataTypes, Sequelize, isMigration = false) => ({
   id: {
-    type: dataTypes.UUID,
+    type: DataTypes.UUID,
     allowNull: false,
     primaryKey: true,
-    // defaultValue: dataTypes.literal('gen_random_uuid()') // o dataTypes.UUIDV4 si no usas pgcrypto
-    defaultValue: dataTypes.UUIDV4
+    // defaultValue: DataTypes.literal('gen_random_uuid()') // o DataTypes.UUIDV4 si no usas pgcrypto
+    defaultValue: DataTypes.UUID
   },
   name: {
-    type: dataTypes.STRING(100),
+    type: DataTypes.STRING(100),
     allowNull: false
   },
   rut: {
-    type: dataTypes.STRING(12),
+    type: DataTypes.STRING(12),
     allowNull: false,
     unique: true
   },
   phone: {
-    type: dataTypes.STRING(20),
+    type: DataTypes.STRING(20),
     allowNull: true
   },
   email: {
-    type: dataTypes.STRING(100),
+    type: DataTypes.STRING(100),
     allowNull: true
   },
   address: {
-    type: dataTypes.TEXT,
+    type: DataTypes.TEXT,
     allowNull: true
   },
   user_id: {
-    type: dataTypes.UUID,
+    type: DataTypes.UUID,
     allowNull: false,
     references: {
       model: 'users',  // nombre tabla users
@@ -36,5 +36,17 @@ module.exports = (dataTypes) => ({
     },
     onUpdate: 'CASCADE',
     onDelete: 'RESTRICT' // o 'SET NULL' si quieres permitir que cliente quede sin usuario
+  },
+  createdAt: {
+    allowNull: false,
+    type: DataTypes.DATE,
+    field: 'created_at',
+    defaultValue: isMigration ? Sequelize.fn('NOW') : Sequelize.literal('NOW()')
+  },
+  updateAt: {
+    allowNull: false,
+    type: DataTypes.DATE,
+    field: 'updated_at',
+    defaultValue: isMigration ? Sequelize.fn('NOW') : Sequelize.literal('NOW()')
   }
 })

@@ -1,34 +1,34 @@
-module.exports = (dataTypes) => ({
+module.exports = (DataTypes, Sequelize, isMigration = false) => ({
   id: {
-    type: dataTypes.UUID,
+    type: DataTypes.UUID,
     primaryKey: true,
     allowNull: false,
-    defaultValue: dataTypes.UUIDV4
-    // defaultValue: type.literal('gen_random_uuid()') // o dataTypes.UUIDV4 si no tienes pgcrypto
+    defaultValue: DataTypes.UUID
+    // defaultValue: type.literal('gen_random_uuid()') // o DataTypes.UUIDV4 si no tienes pgcrypto
   },
   pay_by: {
-    type: dataTypes.STRING,
+    type: DataTypes.STRING,
     allowNull: false,
   },
   amount: {
-    type: dataTypes.INTEGER,
+    type: DataTypes.INTEGER,
     allowNull: false
   },
   day_payment: {
-    type: dataTypes.DATEONLY,
+    type: DataTypes.DATEONLY,
     allowNull: false
   },
   method_payment: {
-    type: dataTypes.ENUM('efectivo', 'transferencia', 'tarjeta debito', 'tarjeta crédito', 'cheque'),
+    type: DataTypes.ENUM('efectivo', 'transferencia', 'tarjeta debito', 'tarjeta crédito', 'cheque'),
     allowNull: false
   },
   status: {
-    type: dataTypes.ENUM('confirmado', 'pendiente', 'rechazado'),
+    type: DataTypes.ENUM('confirmado', 'pendiente', 'rechazado'),
     allowNull: false,
     defaultValue: 'pendiente'
   },
   service_id: {
-    type: dataTypes.UUID,
+    type: DataTypes.UUID,
     allowNull: true,
     references: {
       model: 'services',
@@ -36,5 +36,21 @@ module.exports = (dataTypes) => ({
     },
     onDelete: 'SET NULL',
     onUpdate: 'CASCADE'
+  },
+  createdAt: {
+    allowNull: false,
+    type: DataTypes.DATE,
+    field: 'created_at',
+    defaultValue: isMigration ? Sequelize.fn('NOW') : Sequelize.literal('NOW()')
+    // defaultValue: DataTypes.NOW,
+    // defaultValue: sequelize.literal('NOW()')
+  },
+  updateAt: {
+    allowNull: false,
+    type: DataTypes.DATE,
+    field: 'updated_at',
+    defaultValue: isMigration ? Sequelize.fn('NOW') : Sequelize.literal('NOW()')
+    // defaultValue: sequelize.literal('NOW()')
+    // defaultValue: DataTypes.NOW
   }
 })

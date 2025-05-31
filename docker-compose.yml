@@ -6,12 +6,6 @@ services:
       - /app/node_modules
     ports:
       - "3000:3000"
-    environment:
-      - DB_HOST=postgres
-      - DB_USER=saitama
-      - DB_PASSWORD=saitama123
-      - DB_NAME=saitama
-      - POSTGRES_PORT=5432
     depends_on:
       - postgres
   postgres:

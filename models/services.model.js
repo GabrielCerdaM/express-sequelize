@@ -1,10 +1,11 @@
-const { Model, DataTypes } = require('sequelize')
+const { Model, DataTypes, Sequelize } = require('sequelize')
 const SERVICE_TABLE = 'services'
 const getServiceSchema = require('./schemas/serviceSchema')
 class Services extends Model {
   static associate(models) {
     Services.belongsTo(models.Client, {
       foreignKey: 'client_id',
+      as: 'client',
       onUpdate: 'CASCADE',
       onDelete: 'RESTRICT'
     });
@@ -18,7 +19,7 @@ class Services extends Model {
 
     Services.hasMany(models.Payment, {
       foreignKey: 'service_id',
-      as: 'payments',
+      as: 'payment',
       onUpdate: 'CASCADE',
       onDelete: 'SET NULL'
     });
@@ -33,8 +34,8 @@ class Services extends Model {
   }
 }
 // require Schema
-module.exports = (sequelize, DataTypes) => {
-  Services.init(getServiceSchema(DataTypes), Services.config(sequelize))
+module.exports = (sequelize) => {
+  Services.init(getServiceSchema(DataTypes, Sequelize), Services.config(sequelize))
   return Services
 }
 

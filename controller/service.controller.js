@@ -16,7 +16,6 @@ class serviceController {
       time_cementery
     } = req.body
     try {
-
       const response = await this.service.create({
         type
         , price
@@ -35,8 +34,12 @@ class serviceController {
   }
 
   async find(req, res, next) {
-    const services = await this.service.find()
-    res.status(200).json({ services })
+    try {
+      const services = await this.service.find()
+      res.status(200).json({ services })
+    } catch (error) {
+      res.status(500).json({ error })
+    }
   }
 
   async findOne(req, res, next) {

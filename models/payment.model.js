@@ -1,5 +1,5 @@
 // models/Payment.ts
-const { Model } = require('sequelize');
+const { Model, DataTypes, Sequelize } = require('sequelize');
 const getPaymentSchema = require('./schemas/paymentSchema');
 const PAYMENT_TABLE = 'payments'
 
@@ -22,7 +22,7 @@ class Payment extends Model {
   }
 }
 // require Schema
-module.exports = (sequelize, DataTypes) => {
-  Payment.init(getPaymentSchema(DataTypes), Payment.config(sequelize))
+module.exports = (sequelize) => {
+  Payment.init(getPaymentSchema(DataTypes, Sequelize), Payment.config(sequelize))
   return Payment
 }

@@ -5,10 +5,11 @@ const path = require('path');
 const Sequelize = require('sequelize');
 const basename = path.basename(__filename);
 
-const config = require(__dirname + '/../config/env.config.js');
+const config = require('../config/env.config');
 const db = {};
 
 let sequelize;
+// console.log({ config });
 
 if (config.dbUrl) {
   sequelize = new Sequelize(config.dbUrl, { dialect: config.dialect });
@@ -35,7 +36,7 @@ fs.readdirSync(__dirname)
 
 // 2. Inicializar cada modelo y guardarlo en `db`
 for (const definer of modelDefiners) {
-  const model = definer(sequelize, Sequelize.DataTypes);
+  const model = definer(sequelize);
   if (!model || !model.name) {
     console.warn('⚠️ Modelo inválido:', model);
     continue;

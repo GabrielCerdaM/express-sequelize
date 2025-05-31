@@ -6,12 +6,12 @@ const path = require('path');
 const env = process.env.NODE_ENV || 'development';
 
 dotenv.config({
-  path: path.resolve(process.cwd(), `.env.${env}`)
+  path: path.resolve(process.cwd(), `.env.${env}`),
+  override: true
 });
 
 // 2. Obtener las variables una vez cargadas
 const {
-  NODE_ENV,
   PORT,
   DATABASE_URL,
   DATABASE_USER,
@@ -26,15 +26,15 @@ const {
 
 // 3. Centralizar la configuración por entorno (puedes omitir duplicación si es igual)
 const config = {
-  env: NODE_ENV || 'development',
+  env,
   port: PORT || 3000,
+  dbUrl: DATABASE_URL,
+  dbDialect: DATABASE_DIALECT,
   dbUser: DATABASE_USER,
   dbPassword: DATABASE_PASSWORD,
   dbHost: DATABASE_HOST,
   dbName: DATABASE_NAME,
   dbPort: DATABASE_PORT,
-  dbDialect: DATABASE_DIALECT,
-  dbUrl: DATABASE_URL,
   jwtSecret: JWT_SECRET,
   userPassTemp: USER_PASS_TEMP
 };

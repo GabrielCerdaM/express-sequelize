@@ -1,43 +1,43 @@
-module.exports = (dataTypes) => ({
+module.exports = (DataTypes, Sequelize, isMigration = false) => ({
   id: {
     allowNull: false,
     primaryKey: true,
-    type: dataTypes.UUID
+    type: DataTypes.UUID
   },
   type: {
-    type: dataTypes.STRING,
+    type: DataTypes.STRING,
     allowNull: false,
   },
   price: {
-    type: dataTypes.INTEGER,
+    type: DataTypes.INTEGER,
     allowNull: false,
   },
   installed_at: {
-    type: dataTypes.DATE,
+    type: DataTypes.DATE,
     allowNull: false,
   },
   velatory: {
-    type: dataTypes.STRING,
+    type: DataTypes.STRING,
     allowNull: true,
   },
   place_ceremony: {
-    type: dataTypes.STRING,
+    type: DataTypes.STRING,
     allowNull: true,
   },
   time_ceremony: {
-    type: dataTypes.DATE,
+    type: DataTypes.DATE,
     allowNull: true,
   },
   place_cementery: {
-    type: dataTypes.STRING,
+    type: DataTypes.STRING,
     allowNull: true,
   },
   time_cementery: {
-    type: dataTypes.DATE,
+    type: DataTypes.DATE,
     allowNull: true,
   },
   client_id: {
-    type: dataTypes.UUID,
+    type: DataTypes.UUID,
     allowNull: false,
     references: {
       model: 'clients',
@@ -47,7 +47,7 @@ module.exports = (dataTypes) => ({
     onDelete: 'RESTRICT'
   },
   urn_id: {
-    type: dataTypes.UUID,
+    type: DataTypes.UUID,
     allowNull: false,
     references: {
       model: 'urns',  // nombre tabla users
@@ -55,5 +55,21 @@ module.exports = (dataTypes) => ({
     },
     onUpdate: 'CASCADE',
     onDelete: 'RESTRICT' // o 'SET NULL' si quieres permitir que cliente quede sin usuario
+  },
+  createdAt: {
+    allowNull: false,
+    type: DataTypes.DATE,
+    field: 'created_at',
+    defaultValue: isMigration ? Sequelize.fn('NOW') : Sequelize.literal('NOW()')
+    // defaultValue: Sequelize.literal('NOW()')
+    // defaultValue: DataTypes.NOW
+  },
+  updatedAt: {
+    allowNull: false,
+    type: DataTypes.DATE,
+    field: 'updated_at',
+    defaultValue: isMigration ? Sequelize.fn('NOW') : Sequelize.literal('NOW()')
+    // defaultValue: Sequelize.literal('NOW()')
+    // defaultValue: DataTypes.NOW
   }
 })

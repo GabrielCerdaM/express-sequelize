@@ -1,8 +1,5 @@
-const boom = require('@hapi/boom');
-const { models } = require('../libs/sequelize');
-const { Op, where } = require('sequelize')
+const models = require('../models/index')
 const { generateUser } = require('../utils/helper');
-const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 const { userPassTemp } = require('../config/env.config')
 
