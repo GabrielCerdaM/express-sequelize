@@ -3,7 +3,7 @@ module.exports = (DataTypes, Sequelize, isMigration = false) => ({
     type: DataTypes.UUID,
     primaryKey: true,
     allowNull: false,
-    defaultValue: DataTypes.UUID
+    defaultValue: DataTypes.UUIDV4
     // defaultValue: type.literal('gen_random_uuid()') // o DataTypes.UUIDV4 si no tienes pgcrypto
   },
   pay_by: {
@@ -45,7 +45,7 @@ module.exports = (DataTypes, Sequelize, isMigration = false) => ({
     // defaultValue: DataTypes.NOW,
     // defaultValue: sequelize.literal('NOW()')
   },
-  updateAt: {
+  updatedAt: {
     allowNull: false,
     type: DataTypes.DATE,
     field: 'updated_at',

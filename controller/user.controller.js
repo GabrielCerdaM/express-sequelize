@@ -4,16 +4,6 @@ class userController {
     this.service = userService;
   }
 
-  async create(req, res, next) {
-    try {
-      const { email, role, password } = req.body
-      const user = { email, role, password }
-      const newUser = await this.service.create(user)
-      res.status(200).json({ newUser })
-    } catch (error) {
-      next(error)
-    }
-  }
   async find(req, res, next) {
     try {
 
@@ -36,16 +26,34 @@ class userController {
       next(error)
     }
   }
+
+  async create(req, res, next) {
+    try {
+      const { email, role, password } = req.body
+      const user = { email, role, password }
+      res.status(200).json(await this.service.create(user))
+    } catch (error) {
+      next(error)
+    }
+  }
+
   async update(req, res, next) {
     try {
       const { id } = req.params
       const data = req.body
-
+      // res.status(500).json({ error: "Not implemented Yet", message: 'Admin management and self-use' })
       if (!id) {
         throw new Error("No existe identificador para editar usuario");
       }
+      // should validate that user only could modify their profile
+      // const self = req.user
+      // console.log({ self });
+      if (self.id !== id || self.role !== 'admin') {
+        throw new Error("No es posible editar otro la información de otro usuario");
+      }
 
       const user = await this.service.findOne(id)
+
       if (!user) {
         throw new Error('Usuario no encontrado')
       }
@@ -73,7 +81,7 @@ class userController {
       if (!userDeleted) {
         throw new Error("El usuario no ha podido ser borrado");
       }
-      res.status(200).json({ userDeleted })
+      res.status(200).json(userDeleted ? true : false)
     } catch (error) {
       next(error)
     }

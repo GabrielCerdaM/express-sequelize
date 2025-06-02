@@ -3,6 +3,7 @@ const { boomErrorHandle, errorHandle, logErrors } = require('./middlewares/handl
 const serviceRouter = require('./routes/services.routes')
 const userRouter = require('./routes/user.routes')
 const authRouter = require('./routes/auth.routes')
+const clientRouter = require('./routes/client.routes')
 
 const app = express();
 
@@ -20,7 +21,7 @@ router.use('/users', userRouter)
 
 router.use('/services', serviceRouter)
 
-// router.use('/',UrnRouter)
+router.use('/client', clientRouter)
 
 app.use(logErrors)
 app.use(boomErrorHandle);

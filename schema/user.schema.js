@@ -1,8 +1,9 @@
 const Joi = require('joi')
 
-const id = Joi.number()
+const id = Joi.string().uuid()
 const email = Joi.string().email();
-const role = Joi.string().valid('admin', 'user')
+// should associate this types with types in JOI VALIDATION
+const role = Joi.string().valid('admin', 'user', 'guest', 'client')
 const password = Joi.string().min(8).max(50)
 const createdAt = Joi.date()
 
@@ -25,7 +26,6 @@ const updateSchema = Joi.object({
   role: role,
   password: password,
 });
-
 
 const deleteSchema = Joi.object({
   id: id,

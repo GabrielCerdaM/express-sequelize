@@ -3,7 +3,7 @@ module.exports = (DataTypes, Sequelize, isMigration = false) => ({
     type: DataTypes.UUID,
     allowNull: false,
     primaryKey: true,
-    defaultValue: DataTypes.UUID
+    defaultValue: DataTypes.UUIDV4
   },
   name: {
     type: DataTypes.STRING,
@@ -50,7 +50,7 @@ module.exports = (DataTypes, Sequelize, isMigration = false) => ({
     // defaultValue: Sequelize.literal('NOW()')
     // defaultValue: DataTypes.NOW
   },
-  updateAt: {
+  updatedAt: {
     allowNull: false,
     type: DataTypes.DATE,
     field: 'updated_at',

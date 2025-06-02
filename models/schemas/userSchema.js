@@ -3,10 +3,11 @@ module.exports = (DataTypes, Sequelize, isMigration = false) => ({
     allowNull: false,
     primaryKey: true,
     type: DataTypes.UUID,
-    defaultValue: DataTypes.UUID
+    defaultValue: DataTypes.UUIDV4
     // defaultValue: DataTypes.literal('gen_random_uuid()') // o DataTypes.UUIDV4 si no usas extensión pgcrypto
   },
   role: {
+    // should associate this types with types in JOI VALIDATION
     type: DataTypes.ENUM('admin', 'user', 'client', 'guest'),
     allowNull: false,
     defaultValue: 'guest'

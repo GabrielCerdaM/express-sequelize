@@ -5,7 +5,7 @@ const getClientSchema = require('./schemas/clientSchema')
 class Client extends Model {
   static associate(models) {
     // # association User - Client
-    Client.belongsTo(models.User, { foreignKey: 'client_id', as: 'client' })
+    Client.belongsTo(models.User, { foreignKey: 'user_id', as: 'user' })
 
     // # association Client - Services
     Client.hasMany(models.Service, {

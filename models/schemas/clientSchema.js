@@ -4,7 +4,7 @@ module.exports = (DataTypes, Sequelize, isMigration = false) => ({
     allowNull: false,
     primaryKey: true,
     // defaultValue: DataTypes.literal('gen_random_uuid()') // o DataTypes.UUIDV4 si no usas pgcrypto
-    defaultValue: DataTypes.UUID
+    defaultValue: DataTypes.UUIDV4
   },
   name: {
     type: DataTypes.STRING(100),
@@ -43,7 +43,7 @@ module.exports = (DataTypes, Sequelize, isMigration = false) => ({
     field: 'created_at',
     defaultValue: isMigration ? Sequelize.fn('NOW') : Sequelize.literal('NOW()')
   },
-  updateAt: {
+  updatedAt: {
     allowNull: false,
     type: DataTypes.DATE,
     field: 'updated_at',
