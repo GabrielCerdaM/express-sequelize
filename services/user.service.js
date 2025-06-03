@@ -51,11 +51,9 @@ class UserService {
       }
       const salt = await bcrypt.genSalt(12);
       const hashed = await bcrypt.hash(password, salt)
-      const newUser = await models.User.create({ ...data, password: hashed })
-      return { id: newUser.id, email: newUser.email, createdAt: newUser.createdAt }
+      const response = await models.User.create({ ...data, password: hashed })
+      return { id: response.id, role: response.role, email: response.email, createdAt: response.createdAt }
     } catch (error) {
-      console.log({ type: typeof error });
-      console.log(error.isBoom);
       throw new Error(error);
     }
   }

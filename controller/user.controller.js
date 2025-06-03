@@ -41,15 +41,9 @@ class userController {
     try {
       const { id } = req.params
       const data = req.body
-      // res.status(500).json({ error: "Not implemented Yet", message: 'Admin management and self-use' })
+
       if (!id) {
         throw new Error("No existe identificador para editar usuario");
-      }
-      // should validate that user only could modify their profile
-      // const self = req.user
-      // console.log({ self });
-      if (self.id !== id || self.role !== 'admin') {
-        throw new Error("No es posible editar otro la información de otro usuario");
       }
 
       const user = await this.service.findOne(id)
@@ -65,6 +59,7 @@ class userController {
       next(error)
     }
   }
+
   async delete(req, res, next) {
     try {
       const { id } = req.params
