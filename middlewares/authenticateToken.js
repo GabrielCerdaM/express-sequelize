@@ -7,13 +7,13 @@ const authenticateToken = (requiredRole) => (req, res, next) => {
 
   // Validar si hay encabezado y formato esperado
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
-    return res.status(401).json({ message: 'Acceso denegado, token requerido' });
+    throw new Error("Acceso denegado, token requerido");
   }
 
   const token = authHeader && authHeader.split(' ')[1] //espera Bearer [Token]
 
   if (!token) {
-    return res.status(401).json({ message: 'Acceso denegado, token no válido' })
+    throw new Error('Acceso denegado, token no válido')
   }
 
   try {
@@ -22,7 +22,6 @@ const authenticateToken = (requiredRole) => (req, res, next) => {
     req.user = decoded
 
     if (requiredRole) {
-      // requiredRole.map
       if (decoded.role && decoded.role !== requiredRole) {
         throw new Error("No tienes los permisos necesarios para realizar esta acción");
       }

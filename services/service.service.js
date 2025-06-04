@@ -1,9 +1,4 @@
-const { faker } = require("@faker-js/faker");
-const { generateService } = require("../utils/helper");
-const boom = require("@hapi/boom");
-// const db = require('../models/index')
 const models = require('../models/index')
-// const { env } = require("../config/env.config");
 
 class ServiceService {
 
@@ -57,7 +52,6 @@ class ServiceService {
       return await models.Service.destroy({ where: { id } })
     } catch (error) {
       throw new Error(error.message);
-
     }
   }
 }

@@ -9,15 +9,19 @@ class serviceController {
       const services = await this.service.find()
       res.status(200).json(services)
     } catch (error) {
-      res.status(500).json({ error })
+      next(error)
     }
   }
 
   async findOne(req, res, next) {
-    const { id } = req.params
+    try {
+      const { id } = req.params
+      const service = await this.service.findOne(id)
+      res.status(200).json(service)
+    } catch (error) {
+      next(error)
+    }
 
-    const service = await this.service.findOne(id)
-    res.status(200).json(service)
   }
 
   async create(req, res, next) {
@@ -49,7 +53,7 @@ class serviceController {
 
       res.status(200).json(response)
     } catch (error) {
-      res.status(500).json({ error })
+      next(error)
     }
   }
 
@@ -90,14 +94,18 @@ class serviceController {
       res.status(200).send(response)
 
     } catch (error) {
-      res.status(500).json({ error: error.message })
+      next(error)
     }
   }
 
   async delete(req, res, next) {
-    const { id } = req.body
-    const response = await this.service.delete(id)
-    res.status(200).json({ response })
+    try {
+      const { id } = req.body
+      const response = await this.service.delete(id)
+      res.status(200).json({ response })
+    } catch (error) {
+      next(error)
+    }
   }
 }
 

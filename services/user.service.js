@@ -15,29 +15,44 @@ class UserService {
   }
 
   async find() {
-    const rta = await models.User.findAll({ attributes: ['id', 'role', 'email', 'createdAt'] });
-    return rta;
+    try {
+      const rta = await models.User.findAll({ attributes: ['id', 'role', 'email', 'createdAt'] });
+      return rta;
+    } catch (error) {
+      throw error
+    }
+
   }
 
   async findOne(id) {
-    const user = await models.User.findByPk(id, { attributes: ['id', 'role', 'email', 'createdAt'] })
-    if (!user) {
-      throw new Error('Usuario no encontrado')
+    try {
+      const user = await models.User.findByPk(id, { attributes: ['id', 'role', 'email', 'createdAt'] })
+      if (!user) {
+        throw new Error('Usuario no encontrado')
+      }
+      return user
+    } catch (error) {
+      throw error
     }
-    return user
+
   }
 
   async findByEmail(email) {
-    const user = await models.User.findOne({ where: { email } })
-    if (!user) {
-      throw new Error('Usuario no encontrado')
+    try {
+      const user = await models.User.findOne({ where: { email } })
+      if (!user) {
+        throw new Error('Usuario no encontrado')
+      }
+
+      if (user.length <= 0) {
+        throw new Error("Usuario no encontrado");
+      }
+
+      return user
+    } catch (error) {
+      throw error
     }
 
-    if (user.length <= 0) {
-      throw new Error("Usuario no encontrado");
-    }
-
-    return user
   }
 
   async create(data) {
@@ -52,7 +67,7 @@ class UserService {
       const response = await models.User.create({ ...data, password: hashed })
       return { id: response.id, role: response.role, email: response.email, createdAt: response.createdAt }
     } catch (error) {
-      throw new Error(error);
+      throw error;
     }
   }
 
@@ -77,7 +92,6 @@ class UserService {
     } catch (error) {
       throw error
     }
-
   }
 }
 

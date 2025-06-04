@@ -6,9 +6,15 @@ const logErrors = (err, req, res, next) => {
 }
 
 const errorHandle = (err, req, res, next) => {
-  return res.status(500).json({
-    message: err.message,
-    from: 'handleError'
+  // Si los encabezados ya fueron enviados, delega al manejador de errores por defecto de Express
+  if (res.headersSent) {
+    return next(err);
+  }
+
+  const status = req.status || 500
+  return res.status(status).json({
+    success: false,
+    error: { message: err.message || "Error interno de servidor", }
   })
 }
 
