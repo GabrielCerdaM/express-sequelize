@@ -29,8 +29,6 @@ class ClientController {
     } catch (error) {
       if (error instanceof Sequelize.UniqueConstraintError) {
         // Manejo específico para errores de unicidad
-        console.log({ errors: error.errors });
-
         const field = error.errors[0].path;
         const value = error.errors[0].value;
         return res.status(500).json({ error: `Ya existe un cliente con el mismo ${field}: ${value}` });

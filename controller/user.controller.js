@@ -52,9 +52,7 @@ class userController {
         throw new Error('Usuario no encontrado')
       }
 
-      const userUpdated = await this.service.update(id, data)
-
-      res.status(200).json({ userUpdated })
+      res.status(200).json(await this.service.update(id, data))
     } catch (error) {
       next(error)
     }

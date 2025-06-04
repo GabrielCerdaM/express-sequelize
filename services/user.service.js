@@ -1,7 +1,5 @@
 const models = require('../models/index')
-const { generateUser } = require('../utils/helper');
 const bcrypt = require('bcryptjs')
-const { userPassTemp } = require('../config/env.config')
 
 class UserService {
   constructor() { }
@@ -22,7 +20,7 @@ class UserService {
   }
 
   async findOne(id) {
-    const user = await models.User.findByPk(id, { attributes: ['role', 'email', 'createdAt'] })
+    const user = await models.User.findByPk(id, { attributes: ['id', 'role', 'email', 'createdAt'] })
     if (!user) {
       throw new Error('Usuario no encontrado')
     }
@@ -69,12 +67,17 @@ class UserService {
   }
 
   async delete(id) {
-    const userDeleted = await models.User.destroy({ where: { id } })
+    try {
+      const userDeleted = await models.User.destroy({ where: { id } })
 
-    if (!userDeleted) {
-      throw new Error('Error al eliminar usuario')
+      if (!userDeleted) {
+        throw new Error('Error al eliminar usuario')
+      }
+      return userDeleted
+    } catch (error) {
+      throw error
     }
-    return userDeleted
+
   }
 }
 

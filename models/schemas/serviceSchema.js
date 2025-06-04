@@ -13,7 +13,7 @@ module.exports = (DataTypes, Sequelize, isMigration = false) => ({
     type: DataTypes.INTEGER,
     allowNull: false,
   },
-  installed_at: {
+  installed: {
     type: DataTypes.DATE,
     allowNull: false,
   },

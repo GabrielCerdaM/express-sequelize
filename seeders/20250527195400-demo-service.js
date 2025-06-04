@@ -16,7 +16,7 @@ module.exports = {
       id: serviceId,
       type: 'pino fino',
       price: 1600000,
-      installed_at: '2024-05-20T10:00:00Z',
+      installed: '2024-05-20T10:00:00Z',
       velatory: 'Lugar de velatorio',
       place_ceremony: 'Iglesia donde se realiza el velatorio',
       time_ceremony: '2024-05-20T10:00:00Z',

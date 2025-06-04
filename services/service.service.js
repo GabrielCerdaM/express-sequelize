@@ -13,8 +13,8 @@ class ServiceService {
     try {
       return await models.Service.findAll()
     } catch (error) {
-      console.error({ error });
-      return error.message
+      throw new Error(error.message);
+
     }
   }
 
@@ -26,7 +26,8 @@ class ServiceService {
       }
       return services
     } catch (error) {
-      return error.message
+      throw new Error(error.message);
+
     }
   }
 
@@ -34,7 +35,8 @@ class ServiceService {
     try {
       return await models.Service.create({ ...data })
     } catch (error) {
-      return error.message
+      throw new Error(error.message);
+
     }
   }
 
@@ -42,8 +44,8 @@ class ServiceService {
     try {
       return await models.Service.update({ ...changes }, { where: { id } })
     } catch (error) {
-      console.log({ error });
-      return error.message
+      throw new Error(error.message);
+
     }
   }
 
@@ -54,7 +56,8 @@ class ServiceService {
       }
       return await models.Service.destroy({ where: { id } })
     } catch (error) {
-      return error.message
+      throw new Error(error.message);
+
     }
   }
 }

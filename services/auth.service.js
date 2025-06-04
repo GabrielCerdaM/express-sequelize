@@ -47,7 +47,7 @@ class AuthService {
 
       return resetPasswordToken
     } catch (error) {
-      return error
+      throw error
     }
   }
 

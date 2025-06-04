@@ -9,7 +9,6 @@ const config = require('../config/env.config');
 const db = {};
 
 let sequelize;
-// console.log({ config });
 
 if (config.dbUrl) {
   sequelize = new Sequelize(config.dbUrl, { dialect: config.dialect });

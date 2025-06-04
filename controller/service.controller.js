@@ -4,39 +4,10 @@ class serviceController {
     this.service = servicesService
   }
 
-  async create(req, res, next) {
-    const {
-      type,
-      price,
-      installed,
-      velatory,
-      place_ceremony,
-      time_ceremony,
-      place_cementery,
-      time_cementery
-    } = req.body
-    try {
-      const response = await this.service.create({
-        type
-        , price
-        , installed
-        , velatory
-        , place_ceremony
-        , time_ceremony
-        , place_cementery
-        , time_cementery
-      })
-
-      res.status(200).json({ response })
-    } catch (error) {
-      res.status(500).json({ error })
-    }
-  }
-
   async find(req, res, next) {
     try {
       const services = await this.service.find()
-      res.status(200).json({ services })
+      res.status(200).json(services)
     } catch (error) {
       res.status(500).json({ error })
     }
@@ -46,7 +17,40 @@ class serviceController {
     const { id } = req.params
 
     const service = await this.service.findOne(id)
-    res.status(200).json({ service })
+    res.status(200).json(service)
+  }
+
+  async create(req, res, next) {
+    const {
+      type,
+      price,
+      installed,
+      velatory,
+      place_ceremony,
+      time_ceremony,
+      place_cementery,
+      time_cementery,
+      client_id,
+      urn_id
+    } = req.body
+    try {
+      const response = await this.service.create({
+        type,
+        price,
+        installed,
+        velatory,
+        place_ceremony,
+        time_ceremony,
+        place_cementery,
+        time_cementery,
+        client_id,
+        urn_id,
+      })
+
+      res.status(200).json(response)
+    } catch (error) {
+      res.status(500).json({ error })
+    }
   }
 
   async update(req, res, next) {
@@ -83,7 +87,7 @@ class serviceController {
         , time_cementery
       })
 
-      res.status(200).send(true)
+      res.status(200).send(response)
 
     } catch (error) {
       res.status(500).json({ error: error.message })
