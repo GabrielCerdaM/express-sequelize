@@ -12,6 +12,7 @@ const place_cementery = Joi.string().min(3).max(100);
 const time_cementery = Joi.date().iso();
 const client_id = Joi.string().uuid();
 const urn_id = Joi.string().uuid();
+
 // const contratante_id = Joi.string().uuid();
 // const nombre_fallecido = Joi.string().min(3).max(50);
 // const apellido_fallecido = Joi.string().min(3).max(50);

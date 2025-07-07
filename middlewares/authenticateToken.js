@@ -1,7 +1,8 @@
 const jwt = require('jsonwebtoken');
 const { jwtSecret } = require('../config/env.config');
+const { de } = require('@faker-js/faker');
 
-const authenticateToken = (requiredRole) => (req, res, next) => {
+const authenticateToken = (requiredRole = []) => (req, res, next) => {
 
   const authHeader = req.headers.authorization;
 
@@ -20,14 +21,17 @@ const authenticateToken = (requiredRole) => (req, res, next) => {
     const decoded = jwt.verify(token, jwtSecret)
 
     req.user = decoded
+    console.log({ decoded });
 
-    if (requiredRole) {
-      if (decoded.role && decoded.role !== requiredRole) {
-        throw new Error("No tienes los permisos necesarios para realizar esta acción");
+    if (requiredRole.length > 0) {
+      if (!requiredRole.includes(decoded.role)) {
+        throw new Error("No tienes los permisos necesarios para realizar esta acción")
       }
     }
     next()
   } catch (error) {
+    console.log({ error });
+
     next(error)
   }
 }

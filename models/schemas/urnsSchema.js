@@ -17,6 +17,30 @@ module.exports = (DataTypes, Sequelize, isMigration = false) => ({
     type: DataTypes.STRING,
     allowNull: false
   },
+  sell_status: {
+    type: DataTypes.ENUM('available', 'reserved', 'sold', 'out_of_stock'),
+    allowNull: false,
+    defaultValue: 'available'
+  },
+  status: {
+    type: DataTypes.ENUM('perfect', 'fixable', 'damaged', 'repaired', 'unknown'),
+    allowNull: false,
+    defaultValue: 'perfect'
+  },
+  urn_type: {
+    type: DataTypes.ENUM('carved', 'smooth', 'complete'),
+    allowNull: true,
+    defaultValue: null
+  },
+  carved_detail: {
+    type: DataTypes.STRING,
+    allowNull: true,
+    defaultValue: null
+  },
+  images: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
   price: {
     type: DataTypes.INTEGER,
     allowNull: false
@@ -32,7 +56,7 @@ module.exports = (DataTypes, Sequelize, isMigration = false) => ({
   },
   position_store: {
     type: DataTypes.INTEGER,
-    allowNull: false,
+    allowNull: true,
   },
   received_at: {
     type: DataTypes.DATEONLY,

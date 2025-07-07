@@ -6,7 +6,7 @@ class UrnController {
 
   async find(req, res, next) {
     try {
-      return await this.urnService.find()
+      return res.status(200).json(await this.urnService.find())
     } catch (error) {
       next(error)
     }
@@ -14,7 +14,7 @@ class UrnController {
   async findOne(req, res, next) {
     try {
       const { id } = req.params
-      return await this.urnService.findOne()
+      return res.status(200).json(await this.urnService.findOne(id))
     } catch (error) {
       next(error)
     }
@@ -22,7 +22,7 @@ class UrnController {
   async create(req, res, next) {
     try {
       const payload = req.body
-      return await this.urnService.create()
+      return res.status(200).json(await this.urnService.create({ ...payload }))
     } catch (error) {
       next(error)
     }
@@ -30,8 +30,12 @@ class UrnController {
   async update(req, res, next) {
     try {
       const { id } = req.params
+      if (!id) {
+        throw new Error("Id is required for updating a record");
+      }
+
       const payload = req.body
-      return await this.urnService.update()
+      return res.status(200).json(await this.urnService.update(id, payload))
     } catch (error) {
       next(error)
     }
@@ -39,7 +43,11 @@ class UrnController {
   async delete(req, res, next) {
     try {
       const { id } = req.body
-      return await this.urnService.delete()
+      if (!id) {
+        throw new Error("Id is required for updating a record");
+      }
+
+      return res.status(200).json(await this.urnService.delete(id))
     } catch (error) {
       next(error)
     }
