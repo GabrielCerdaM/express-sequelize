@@ -1,29 +1,29 @@
 services:
   backend:
     build: .
-    volumes:
-      - .:/app
-      - /app/node_modules
     ports:
       - "3000:3000"
     depends_on:
       - postgres
+    restart: always
   postgres:
     image: postgres:13
     environment:
-      - POSTGRES_DB=saitama
-      - POSTGRES_USER=saitama
-      - POSTGRES_PASSWORD=saitama123
+      - POSTGRES_DB=
+      - POSTGRES_USER=
+      - POSTGRES_PASSWORD=
     ports:
       - 5432:5432
     volumes:
       - ./postgres_data:/var/lib/postgresql/data
+    restart: always
   pgadmin:
     image: dpage/pgadmin4
     environment:
-      - PGADMIN_DEFAULT_EMAIL=admin@mail.com
-      - PGADMIN_DEFAULT_PASSWORD=ROOT
+      - PGADMIN_DEFAULT_EMAIL=
+      - PGADMIN_DEFAULT_PASSWORD=
     ports:
       - 5050:80
     depends_on:
       - postgres
+    restart: always

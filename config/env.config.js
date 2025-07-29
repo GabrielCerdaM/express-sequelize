@@ -29,7 +29,7 @@ const config = {
   env,
   port: PORT || 3000,
   dbUrl: DATABASE_URL,
-  dbDialect: DATABASE_DIALECT,
+  dbDialect: DATABASE_DIALECT || 'postgres',
   dbUser: DATABASE_USER,
   dbPassword: DATABASE_PASSWORD,
   dbHost: DATABASE_HOST,
